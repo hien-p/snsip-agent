@@ -1,0 +1,48 @@
+{
+  "name": "snsip-agent",
+  "version": "0.0.1",
+  "private": true,
+  "description": "SNSIP-Agent — Verifiable AI Agent Identity for .sol (port of ENSIP-25 + ERC-8004 to Solana)",
+  "license": "MIT",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "anchor:build": "anchor build",
+    "anchor:test": "anchor test",
+    "anchor:deploy:devnet": "anchor deploy --provider.cluster devnet",
+    "anchor:keys:sync": "anchor keys sync",
+    "smoke": "tsx scripts/smoke-test.mts",
+    "seed:agents": "tsx scripts/seed-agents.ts",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
+  },
+  "dependencies": {
+    "@snsip/agent-sdk": "workspace:*",
+    "@bonfida/spl-name-service": "^3.0.5",
+    "@solana/spl-token": "^0.4.9",
+    "@solana/web3.js": "^1.98.0"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.0",
+    "typescript": "^5.7.0",
+    "@types/node": "^22.10.0",
+    "tsx": "^4.20.0",
+    "prettier": "^3.4.0",
+    "@coral-xyz/anchor": "^0.30.1",
+    "@solana/web3.js": "^1.98.0",
+    "chai": "^4.5.0",
+    "mocha": "^10.7.0",
+    "ts-mocha": "^10.0.0",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^10.0.0",
+    "@types/bn.js": "^5.1.5",
+    "bn.js": "^5.2.1",
+    "tweetnacl": "^1.0.3"
+  }
+}

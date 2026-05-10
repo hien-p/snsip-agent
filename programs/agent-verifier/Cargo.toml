@@ -1,0 +1,21 @@
+[package]
+name = "agent-verifier"
+version = "0.1.0"
+description = "SNSIP-Agent Verifier — CPI-callable on-chain Ed25519 sigverify against agent identity"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "agent_verifier"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+idl-build = ["anchor-lang/idl-build"]
+
+[dependencies]
+anchor-lang = { workspace = true }
+identity-registry = { path = "../identity-registry", features = ["cpi"] }

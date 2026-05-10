@@ -1,0 +1,73 @@
+/* Append to apps/web/src/app/globals.css after bootstrap. */
+
+@import "@solana/wallet-adapter-react-ui/styles.css";
+
+:root {
+  --bg: #0b0d10;
+  --panel: #14171c;
+  --panel-2: #1a1f26;
+  --border: #2a313a;
+  --text: #e5e9ef;
+  --muted: #8a93a0;
+  --accent: #00ffa3;
+  --accent-2: #14f195;
+  --danger: #ff4d4f;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.btn-accent {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #061018;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  transition: opacity 0.15s;
+}
+.btn-accent:hover { opacity: 0.9; }
+.btn-accent:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  transition: background 0.15s;
+}
+.btn-ghost:hover { background: var(--panel-2); }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.input {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  color: var(--text);
+  width: 100%;
+}
+.input:focus { outline: 2px solid var(--accent); }
+
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  background: var(--panel-2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+.wallet-adapter-button-trigger {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2)) !important;
+  color: #061018 !important;
+}

@@ -1,0 +1,228 @@
+@import "tailwindcss";
+
+/* wallet-adapter CSS imported via JS in layout.tsx */
+
+:root {
+  /* Lifted from /Users/harryphan/Downloads/saas — cream + lime palette */
+  --bg: #f5f5f5;
+  --panel: #ffffff;
+  --panel-2: #fafafa;
+  --panel-3: #ffffff;
+  --frame: #ffffff;
+
+  --border: #e5e5e5;
+  --border-2: #d4d4d4;
+
+  --text: #0a0a0a;
+  --foreground: #171717;
+  --muted: #737373;
+  --muted-2: #525252;
+
+  --accent: #a8d946;            /* lime green — SaaS accent */
+  --accent-2: #94c635;           /* deeper lime for gradient */
+  --accent-soft: rgba(168, 217, 70, 0.18);
+  --accent-glow: rgba(168, 217, 70, 0.35);
+  --accent-bg: #e8f5c8;          /* very light lime tint for card backgrounds */
+
+  --card-primary: #a8d946;
+  --card-secondary: #e8f5c8;
+  --card-foreground: #171717;
+  --card-foreground-muted: #525252;
+
+  --purple: #7c5cff;
+  --purple-soft: rgba(124, 92, 255, 0.10);
+
+  --danger: #dc2626;
+
+  --radius-sm: 0.625rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 2.5rem;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.10), 0 8px 24px rgba(0, 0, 0, 0.06);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, monospace;
+  --font-serif: "Georgia", "Times New Roman", serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.005em;
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+::selection { background: var(--accent); color: #061018; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Buttons — black filled with lime arrow slot (SaaS pattern) */
+.btn-accent {
+  background: var(--text);
+  color: #fafafa;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: var(--radius-md);
+  padding: 0.875rem 1.375rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+  box-shadow: var(--shadow-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn-accent:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.btn-accent:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+
+/* Lime variant — accent bg with black text */
+.btn-lime {
+  background: var(--accent);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: var(--radius-md);
+  padding: 0.875rem 1.375rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 8px 20px rgba(168, 217, 70, 0.30);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn-lime:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(168, 217, 70, 0.40);
+}
+
+.btn-ghost {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.875rem 1.375rem;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+.btn-ghost:hover:not(:disabled) { background: var(--panel-2); border-color: var(--border-2); transform: translateY(-1px); }
+.btn-ghost:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Panels (cards) */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.input {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.9375rem;
+}
+.input:focus {
+  outline: none;
+  border-color: var(--text);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  background: var(--panel-2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+/* Wallet adapter button overridden */
+.wallet-adapter-button-trigger {
+  background: var(--text) !important;
+  color: #fafafa !important;
+  border-radius: var(--radius-md) !important;
+  font-weight: 600 !important;
+  height: auto !important;
+  padding: 0.625rem 1rem !important;
+}
+
+/* Helpers */
+.serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.dotted-bg {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* White site frame (magazine-style) — 10px white edge around the viewport.
+   Sits above content but below dialogs (z-index 9000). Hidden on mobile. */
+.site-frame {
+  position: fixed;
+  z-index: 9000;
+  pointer-events: none;
+  background: var(--frame);
+}
+.site-frame--top    { top: 0;    left: 0;   right: 0;  height: 10px; }
+.site-frame--bottom { bottom: 0; left: 0;   right: 0;  height: 10px; }
+.site-frame--left   { top: 0;    left: 0;   bottom: 0; width: 10px; }
+.site-frame--right  { top: 0;    right: 0;  bottom: 0; width: 10px; }
+@media (max-width: 850px) {
+  .site-frame { display: none; }
+}
+
+/* Solana-themed mesh gradient hero background — light theme */
+.solana-mesh {
+  background:
+    radial-gradient(ellipse 60% 50% at 18% 22%, rgba(153, 69, 255, 0.30) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 82% 18%, rgba(20, 241, 149, 0.32) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 75% 80%, rgba(168, 217, 70, 0.32) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 22% 78%, rgba(0, 213, 217, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 50% at 50% 50%, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, 0.5) 70%),
+    linear-gradient(180deg, #fcfdf9 0%, #f3f7e6 100%);
+}
+
+/* Slow ambient zoom for the hero bg layer */
+@keyframes hero-bg-zoom {
+  0%, 100% { transform: scale(1.05); }
+  50%      { transform: scale(1.10) translate(-1%, -0.5%); }
+}
+.hero-bg-zoom {
+  animation: hero-bg-zoom 22s ease-in-out infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-zoom { animation: none; }
+}

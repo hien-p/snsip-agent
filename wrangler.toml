@@ -1,0 +1,26 @@
+# SNSIP-Agent — Cloudflare Workers (Static Assets)
+#
+# Serves the Next.js static export from `apps/web/out/` at the edge.
+#
+# Adapted from https://github.com/hien-p/claude-cloudflare-template
+# Docs: https://developers.cloudflare.com/workers/static-assets/
+
+name = "snsip"
+compatibility_date = "2026-05-01"
+
+[assets]
+directory = "./apps/web/out"
+# Make deep links work for the App Router (e.g. /playground/verify).
+not_found_handling = "single-page-application"
+
+# Public, non-secret config goes here.
+# For secrets: `npx wrangler secret put NAME`.
+[vars]
+PUBLIC_CLUSTER = "devnet"
+PUBLIC_PROGRAM_ID_IDENTITY = "11111111111111111111111111111111"
+PUBLIC_PROGRAM_ID_REPUTATION = "11111111111111111111111111111111"
+PUBLIC_PROGRAM_ID_VALIDATION = "11111111111111111111111111111111"
+PUBLIC_PROGRAM_ID_VERIFIER = "11111111111111111111111111111111"
+
+[dev]
+port = 8787
