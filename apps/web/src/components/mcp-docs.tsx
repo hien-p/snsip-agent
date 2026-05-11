@@ -4,20 +4,27 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { Check, Copy, Plug, Terminal, MessageSquare } from "lucide-react";
 
+const BUILD_CMD = `# One-line install: clone, install, build
+git clone https://github.com/hien-p/snsip-agent.git
+cd snsip-agent && pnpm install && pnpm --filter @snsip/mcp build
+
+# Note the absolute path that gets printed at the end of the build.
+# You'll paste it into the config below.`;
+
 const CONFIG_JSON = `{
   "mcpServers": {
     "snsip-agent": {
       "command": "node",
-      "args": ["/absolute/path/to/sns_prj/packages/snsip-mcp/dist/server.js"],
-      "env": { "SNSIP_CLUSTER": "devnet" }
+      "args": ["/ABSOLUTE/PATH/TO/snsip-agent/packages/snsip-mcp/dist/server.js"],
+      "env": {
+        "SNSIP_CLUSTER": "devnet",
+        "SIM_API_KEY": "optional — get one at sim.dune.com for the activity tool"
+      }
     }
   }
 }`;
 
-const BUILD_CMD = `git clone https://github.com/<your-org>/snsip-agent
-cd snsip-agent
-pnpm install
-pnpm --filter @snsip/mcp build`;
+const REMOTE_SHARE_URL = "https://snsip-cc5.pages.dev/install";
 
 const TOOLS = [
   {
@@ -65,21 +72,24 @@ export function McpDocs() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <Plug size={18} />
-          <strong style={{ fontSize: "1.0625rem" }}>Why this is the moment</strong>
+          <strong style={{ fontSize: "1.0625rem" }}>Plug `.sol` agent identity into your AI assistant</strong>
         </div>
         <p style={{ margin: 0, fontSize: "0.9375rem", lineHeight: 1.6, color: "var(--text)" }}>
-          Every AI assistant that speaks MCP — Claude Desktop, Cursor, Continue, Cline — can now read
-          a <code>.sol</code> identity, check its permissions, and sign in with it. Without us
-          writing custom integrations for each one. ENS doesn't have this. SNS doesn't have this.
-          You'd be first.
+          The first agent-identity protocol on Solana that speaks Model Context Protocol natively.
+          Claude Desktop, Cursor, Continue, Cline — any MCP client reads a <code>.sol</code> agent's
+          permissions live from Solana and respects them in conversation. No custom integration per
+          tool.
         </p>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-          <span className="tag" style={{ borderColor: "var(--accent-2)" }}>4 tools</span>
+          <span className="tag" style={{ borderColor: "var(--accent-2)" }}>5 tools</span>
           <span className="tag" style={{ borderColor: "var(--accent-2)" }}>stdio transport</span>
           <span className="tag" style={{ borderColor: "var(--accent-2)" }}>devnet by default</span>
-          <span className="tag" style={{ borderColor: "var(--accent-2)" }}>~120 lines wrapping the SDK</span>
+          <span className="tag" style={{ borderColor: "var(--accent-2)" }}>~280 lines wrapping the SDK</span>
         </div>
       </div>
+
+      <ShareInstallBar />
+
 
       <Section icon={<Terminal size={16} />} title="1. Build">
         <CodeBlock label="terminal" code={BUILD_CMD} />
@@ -171,6 +181,64 @@ export function McpDocs() {
         </p>
       </div>
     </section>
+  );
+}
+
+function ShareInstallBar() {
+  const [copied, setCopied] = useState(false);
+  const onShare = async () => {
+    try {
+      await navigator.clipboard.writeText(REMOTE_SHARE_URL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1400);
+    } catch {}
+  };
+  return (
+    <div
+      className="panel"
+      style={{
+        background: "var(--text)",
+        color: "#fafafa",
+        padding: "1.25rem 1.5rem",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: "1rem",
+        flexWrap: "wrap",
+        border: "none",
+      }}
+    >
+      <div>
+        <div style={{ fontSize: "0.6875rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--accent)", fontWeight: 700 }}>
+          Share install link
+        </div>
+        <div style={{ fontSize: "1.125rem", fontWeight: 700, marginTop: "0.25rem", fontFamily: "monospace" }}>
+          {REMOTE_SHARE_URL}
+        </div>
+        <div style={{ fontSize: "0.75rem", color: "rgba(250,250,250,0.65)", marginTop: "0.25rem" }}>
+          Send this URL to anyone running Claude Desktop. They land on this page and follow the 3 steps below.
+        </div>
+      </div>
+      <motion.button
+        whileTap={{ scale: 0.96 }}
+        onClick={onShare}
+        style={{
+          background: "var(--accent)",
+          color: "var(--text)",
+          border: "none",
+          padding: "0.75rem 1.25rem",
+          borderRadius: "var(--radius-md)",
+          fontWeight: 700,
+          fontSize: "0.875rem",
+          cursor: "pointer",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "0.375rem",
+        }}
+      >
+        {copied ? <><Check size={14} /> Copied!</> : <><Copy size={14} /> Copy share link</>}
+      </motion.button>
+    </div>
   );
 }
 
