@@ -6,9 +6,17 @@ import { useResolveDomain } from "@/lib/use-sns";
 import { isValidDomain, normalizeDomain, shortPubkey, explorerAddress } from "@/lib/format";
 import { RecordCard } from "./record-card";
 
+const DEMO_DOMAINS = [
+  "swap-bot.sol",
+  "snsip-test-001.sol",
+  "monitor.sol",
+  "auditor.sol",
+  "arb-trader.sol",
+];
+
 export function SnsExplorer() {
-  const [input, setInput] = useState("bonfida.sol");
-  const [resolving, setResolving] = useState<string | null>(null);
+  const [input, setInput] = useState("swap-bot.sol");
+  const [resolving, setResolving] = useState<string | null>("swap-bot.sol");
   const { owner, agent, records, loading, error } = useResolveDomain(resolving);
 
   const submit = (e: React.FormEvent) => {
@@ -22,7 +30,7 @@ export function SnsExplorer() {
       <header>
         <h2 style={{ fontSize: "1.25rem", fontWeight: 600 }}>Resolve any .sol</h2>
         <p style={{ color: "var(--muted)", fontSize: "0.9rem", marginTop: "0.25rem" }}>
-          Paste any Solana name. We render the owner and SNSIP-Agent records v2 live.
+          Paste any Solana name. We render the owner and SNSIP-Agent records v2 live from devnet.
         </p>
       </header>
 
@@ -31,7 +39,7 @@ export function SnsExplorer() {
           className="input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="alice.sol"
+          placeholder="swap-bot.sol"
           spellCheck={false}
           autoCapitalize="off"
           autoCorrect="off"
@@ -40,6 +48,24 @@ export function SnsExplorer() {
           Resolve
         </button>
       </form>
+
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.375rem", alignItems: "center" }}>
+        <span style={{ fontSize: "0.75rem", color: "var(--muted)" }}>Try a devnet agent:</span>
+        {DEMO_DOMAINS.map((d) => (
+          <button
+            key={d}
+            type="button"
+            onClick={() => {
+              setInput(d);
+              setResolving(d);
+            }}
+            className="tag"
+            style={{ cursor: "pointer", fontFamily: "monospace", fontSize: "0.6875rem" }}
+          >
+            {d}
+          </button>
+        ))}
+      </div>
 
       {resolving && (
         <div style={{ display: "grid", gap: "0.75rem" }}>
