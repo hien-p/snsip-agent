@@ -1,214 +1,225 @@
 # Video Script — SNSIP-Agent demo
 
-**Target length:** 3:00 (main cut) · **Backup cuts:** 0:90 (X clip) · 0:30 (teaser)
-**Format:** screen capture + voiceover. 1080p, MP4, ≤ 200 MB.
-**Tone:** founder-first. Solana-native framing. Brutal clarity. No buzzwords.
-**Recorder:** Loom or QuickTime → Incognito Chrome → unlisted YouTube.
+**Target length:** 3:00 main cut · **Backup:** 2:00 if time pressure
+**Format:** screen capture + voiceover. 1080p MP4, ≤ 200 MB.
+**Tone:** I'm a builder explaining what I made and why. Plain words. Short sentences. Like I'm telling a friend.
 
-> This file is paste-ready. Print it, or read it on a second screen while recording.
+> Read this on a second screen while recording. The narration is paste-ready — say it as written, or use your own words; the script just keeps the structure tight.
 
 ---
 
-## A. MAIN CUT — 3:00
+## Tone rules (read this once before recording)
+
+1. **Say "I" not "we."** You built this. Own it.
+2. **Plain words.** Say "private key" not "keypair." "Name" not "identity primitive." "Server" not "Model Context Protocol implementation."
+3. **One idea per sentence.** When in doubt, cut.
+4. **Show before claim.** Don't tell judges "this is innovative" — let them see the refusal and decide.
+5. **Honest when it matters.** If the enforcement is in the app not on-chain (yet), say so — "the rules run in the app today, on-chain enforcement is the next step."
+6. **No hype words.** "Killer," "revolutionary," "groundbreaking," "first in the world" — cut them all.
+
+---
+
+## MAIN CUT — 3:00
+
+---
 
 ### Scene 1 · 0:00 – 0:15 · Hook
 
-**Visual:** Open `https://snsip-cc5.pages.dev` in browser. Hero text visible: *"Give your AI agent a verifiable .sol identity."* Sit on the hero. Don't scroll.
+**Visual:** snsip-cc5.pages.dev home page. Hero text visible. Just sit on it.
 
-**Voiceover:**
-> AI agents already move real money on Solana every block. Every one of them today is a raw keypair — no name, no scope, no audit trail. Identity is the missing primitive on Solana. SNSIP-Agent fixes that.
-
-**Tech callout (caption overlay if you have time):**
-- 5 agents live on Solana devnet
-- Open standard, MIT-licensed
+**Say:**
+> Every AI agent running on Solana today is just a private key. No name. No history. No rules. If it gets hacked, nobody can stop it. I built **SNSIP-Agent** to fix that — a name system for AI agents on Solana.
 
 ---
 
-### Scene 2 · 0:15 – 0:35 · Social Identity (Sign-in with .sol)
+### Scene 2 · 0:15 – 0:35 · Your `.sol` is your login
 
-**Visual:** Click **"Start the tour"** card → lands on `/login-demo/`. Click chip `snsip-test-001.sol` → click **Sign in**. Wait for *"Ownership confirmed"*. Click **Sign challenge** → Phantom popup → Approve. Green *"Welcome back, snsip-test-001.sol"* card appears.
+**Visual:** Click *Start the tour* → `/login-demo/`. Click chip `snsip-test-001.sol`. Click **Sign in**. Wait for "Ownership confirmed". Click **Sign challenge**. Phantom popup → Approve. Green "Welcome back" card.
 
-**Voiceover:**
-> First — social identity. Your `.sol` is your login. The dApp asks SNS who owns this name on-chain. The wallet signs a one-time challenge. The user's profile — avatar, bio, endpoint — comes straight from records v2. No email, no password, no OAuth handshake.
-
-**Tech callout:**
-- `resolveDomainOwner(connection, "snsip-test-001.sol")` → wallet pubkey check
-- `wallet.signMessage(challenge)` → Ed25519 signature, verified locally
+**Say:**
+> Watch. I type my `.sol` name. The app asks Solana: who owns this name? My wallet signs a short message to prove I'm the owner. That's it — that's the login. No password, no email. Your name on Solana is who you are.
 
 ---
 
 ### Scene 3 · 0:35 – 0:55 · Sybil-resistant airdrop
 
-**Visual:** Click **Next →** at the bottom (TourFooter) → `/airdrop-demo/`. The 5-row table loads. Point at "5 of 5 agents pass identity gate". Click **Claim airdrop** on the first row. Phantom → Approve. Green `claimed · 5xpt…` badge appears with Explorer link.
+**Visual:** Click *Next* → `/airdrop-demo/`. Wait for 5 rows. Point at "5 of 5 agents pass." Click **Claim airdrop** on the first row. Phantom → Approve. Green badge appears.
 
-**Voiceover:**
-> Same identity primitive solves sybil. Every claimant runs four checks — signing key, endpoint, capability JSON, non-expired permission. Sybil farmers can spawn ten thousand wallets in an hour. Not ten thousand `.sol` agents with valid records. The gate is identity, not balance.
-
-**Tech callout:**
-- Four green chips per row → `signing-pubkey` ✓ `endpoint` ✓ `capability JSON` ✓ `non-expired` ✓
-- Claim fires a real `MemoSq4gqA…cHr` transaction
+**Say:**
+> Here's a simple use case — an airdrop. But it only goes to agents that have a real identity. A name. A signing key. An endpoint. A permission. Fake wallets are cheap — you can spawn ten thousand in an hour. Fake `.sol` names with full records? You can't fake those. So real agents claim. Fake ones get filtered out.
 
 ---
 
-### Scene 4 · 0:55 – 1:20 · Permission-gated swap
+### Scene 4 · 0:55 – 1:20 · Every agent has rules
 
-**Visual:** Click **Next →** → `/swap-demo/`. Pre-filled: `swap-bot.sol`, Jupiter, USDC, 25. Green verdict block. Click the chip `✗ over cap` — amount jumps to 500, verdict flips RED. Click `✓ within cap` — back to green. Click **Execute on Solana** → Phantom → Approve. Confirmation card with on-chain memo Explorer link appears.
+**Visual:** Click *Next* → `/swap-demo/`. Pre-filled `swap-bot.sol`, Jupiter, USDC, 25. Click chip `✗ over cap` (amount jumps to 500, red verdict). Click `✓ within cap` (back to 25, green). Click **Execute on Solana**. Phantom → Approve. Confirmation card.
 
-**Voiceover:**
-> Now agent identity. Every grant is scoped — only call X, only spend Y per period, only until Z. Five hundred USDC? The cap is one hundred. Gate refuses, with the four checks visible — active permission, target allowed, cap exists, amount within cap. Drop to twenty-five, sign, the gated action lands on Solana with a permanent receipt. Revoke means rewriting the parent record. The owner controls it.
+**Say:**
+> Every agent has rules. This one — `swap-bot` — can spend up to one hundred USDC a day, only through Jupiter, only for the next month. Watch: if I ask it to swap five hundred — the app refuses before any money moves. Cap is one hundred. Drop to twenty-five, it goes through and writes a receipt on Solana. The owner sets the rules. The agent can't break them.
 
-**Tech callout:**
-- Permission schema: `{ target, selector, spendCap, period, expiresAt }`
-- Memo: `SNSIP-Swap v1 · agent=swap-bot.sol · gate=allowed · permission_label=swap-bot · t=<iso>`
+> *(Brief honesty beat if you want it):* Today those rules run in the app. The next step is enforcing them directly in Solana smart contracts — the byte format is already ready for that.
 
 ---
 
-### Scene 5 · 1:20 – 1:45 · Reputation + Validations
+### Scene 5 · 1:20 – 1:45 · Reputation + attestations
 
-**Visual:** Open `/agents/?domain=auditor.sol`. Click **Reputation** tab. Point at 3 demo events with `w=8`, `w=5`, `w=6` weights. Click chip `✓ Honored 30-day expiry…` — rating + note auto-populate. Click **Submit on-chain** → Phantom → Approve. New event appears at top with green `on-chain` badge + Explorer link. Click **Validations** tab. Show 2 demo attestations (audit class purple, capability class lime).
+**Visual:** Open `/agents/?domain=auditor.sol`. Click **Reputation** tab. Point at the 3 demo events. Click chip `✓ Honored 30-day expiry…`. Click **Submit on-chain**. Phantom → Approve. New event lands. Click **Validations** tab briefly.
 
-**Voiceover:**
-> Reputation isn't just numbers. Every event is a real Solana memo, signed by the validator's wallet. Rating, weight, timestamp — the format is forward-compatible with the registry program. Aggregated score is weighted by validator authority. Validations are typed — audit, KYC, capability, custom. Anchor registries are post-hackathon; the bytes today already match.
-
-**Tech callout:**
-- `SNSIP-Rep v2` schema published in `SNSIP-AGENT.md` Appendix A
-- 9 sample on-chain transactions in `pitch/onchain-proof.md` — every byte verifiable on Explorer
+**Say:**
+> Reputation. Every time someone reviews an agent — good, neutral, bad — the review gets written on Solana. Anyone can check it later. Same idea for attestations: a security firm or another agent can vouch for someone, and that vouch lives on-chain too. Audit, KYC, whatever class fits.
 
 ---
 
-### Scene 6 · 1:45 – 2:00 · Two-agent handshake
+### Scene 6 · 1:45 – 2:00 · Two agents meet
 
-**Visual:** Open `/playground/handshake/`. Click **Start handshake**. Let the 5-round animation play (~10s). Final state: both agents ✓ Verified, trust gauges filled, validation memo signature appears below.
+**Visual:** `/playground/handshake/`. Click **Start handshake**. Let the 5 rounds play.
 
-**Voiceover:**
-> Two real agents resolve each other through SNS, exchange signed Ed25519 challenges, build reputation across five clean rounds. The final round stamps a validation record on Solana — anyone querying later can verify these two really did handshake. Composable agent-to-agent trust.
-
-**Tech callout:**
-- Both agents loaded from devnet records v2
-- Final memo: `SNSIP-Handshake v1 · alice=… · bob=… · rounds=5 · all_verified=true`
+**Say:**
+> Two agents meet. They check each other's identity five times. Both prove who they are by signing random numbers. After five clean rounds, the result gets stamped on Solana. So anyone — a third party, a dApp, a regulator — can come back later and verify: yes, these two really did handshake.
 
 ---
 
-### Scene 7 · 2:00 – 2:15 · MagicBlock latency
+### Scene 7 · 2:00 – 2:15 · Faster with MagicBlock
 
-**Visual:** Open `/playground/latency/`. Click **Auto × 25** on L1 column (slow drip, ~600-1200ms each). Click **Auto × 25** on ER column (fast burst, sub-50ms each). Two histograms land side by side.
+**Visual:** `/playground/latency/`. Click **Auto × 25** on L1. Click **Auto × 25** on ER.
 
-**Voiceover:**
-> Agents transact constantly. L1 — about a second per tap. MagicBlock Ephemeral Rollups — sub-fifty milliseconds once the account is delegated. Real-time agent settlement at scale.
-
-**Tech callout:**
-- Same transaction signed against two RPC endpoints
-- Latency measured wall-clock, browser-side
+**Say:**
+> Agents move fast, so I wired in MagicBlock. The left side is normal Solana — about a second per transaction. The right side is MagicBlock Ephemeral Rollups — under fifty milliseconds. That's the speed real-time agents need.
 
 ---
 
-### Scene 8 · 2:15 – 2:50 · MCP — the killer scene (Claude Desktop)
+### Scene 8 · 2:15 – 2:50 · Claude reads it (the moment)
 
-> ⚠️ Pre-record this segment separately in Claude Desktop and stitch in post. Most fragile take of the whole video.
+> Pre-record this in Claude Desktop, stitch in post.
 
-**Visual:** Claude Desktop window. Visible 🔌 indicator showing *"snsip-agent · 5 tools"* in input bar.
+**Visual:** Claude Desktop, 🔌 snsip-agent · 5 tools visible.
 
-**Action 1 — type into Claude:**
+**Type into Claude:**
 ```
 What is swap-bot.sol allowed to do?
 ```
 
-Claude calls `sns_check_permission` / `sns_resolve_identity` (tool-call indicator shows). Claude answers in plain English:
-> *swap-bot.sol can call Jupiter Aggregator, spend up to 100 USDC per day, and the permission expires in 28 days.*
+Claude calls the tool, reads from Solana, answers:
+> *swap-bot.sol can call Jupiter, spend up to 100 USDC per day, expires in 28 days.*
 
-**Action 2 — type into Claude:**
+**Type:**
 ```
 Try to swap 500 USDC.
 ```
 
-Claude calls `sns_check_permission` with amount=500000000. Gets `{ allowed: false, reason: "requested 500000000 > cap 100000000" }`. Refuses in plain English:
-> *I can't — its on-chain permission caps spending at 100 USDC per day.*
+Claude calls the tool again, gets a refusal, says:
+> *I can't — its on-chain rule caps spending at 100 USDC per day.*
 
-**Voiceover (over both actions):**
-> Here's why this matters. SNSIP isn't just a website — it's a Model Context Protocol server. Claude Desktop reads `.sol` agent permissions natively. Watch — five hundred USDC, the cap is one hundred. Claude refuses, *as Claude*, because the on-chain gate said no. No custom integration. Any AI assistant that speaks MCP — Cursor, Continue, anything — can do this today. First identity protocol on Solana that ships this.
-
-**Tech callout:**
-- MCP tool: `sns_check_permission` — input schema documented in `packages/snsip-mcp/README.md`
-- Install: paste 12 lines into `~/Library/Application Support/Claude/claude_desktop_config.json`, restart
+**Say (over both prompts):**
+> Last piece. I built a small server so AI assistants — Claude, Cursor, anything similar — can read these agent identities directly. Watch. I ask Claude what `swap-bot` is allowed to do. Claude reads the answer from Solana — one hundred USDC a day, Jupiter, expires in twenty-eight days. Now I tell it to swap five hundred. Claude refuses, in its own words: "I can't, the on-chain rule says one hundred max." That's the difference. The agent's rules aren't a doc you read — they're something every AI assistant can see and respect.
 
 ---
 
 ### Scene 9 · 2:50 – 3:00 · Close
 
-**Visual:** Cut back to home tab. Pause on the stats bar: *"5 agents on-chain · 25 records · 38 tests passing · 1 draft SNSIP."*
+**Visual:** Back to home, stats bar visible.
 
-**Voiceover:**
-> Five agents on Solana devnet. Twenty-five records v2 written. Thirty-eight tests. One MCP server. Sign-in, airdrops, gated swaps, reputation — all live today. Open standard. MIT-licensed. The repo's in the description. Thanks.
+**Say:**
+> Five agents live on Solana devnet right now. Open spec. Open SDK. Open MCP server. If you're building agents on Solana, you can use this today. Thanks for watching.
 
-**Final frame:** end card showing **snsip-cc5.pages.dev** in big serif italic, lime accent. Below: `github.com/hien-p/snsip-agent`.
+**End card:** snsip-cc5.pages.dev / github.com/hien-p/snsip-agent
 
-**STOP RECORDING.**
-
----
-
-## B. SAFE 2:00 CUT — drop if anything mid-record breaks
-
-Same 8 scenes minus Scene 7 (latency) and Scene 5b (Validations tab). Compress Scene 8 (MCP) to a single prompt: just *"Try to swap 500 USDC as swap-bot.sol"* → Claude refuses. Keep total time to 2:00. The MCP refusal is non-negotiable — it's the strongest moment.
-
-Order: Hook (12s) → Sign-in (18s) → Airdrop (20s) → Swap with refusal (25s) → Reputation (15s) → Handshake (15s) → MCP refusal (25s) → Close (10s) = 2:00.
+**STOP.**
 
 ---
 
-## C. X CLIP — 0:30 teaser
+## SAFE 2:00 CUT (use this if recording goes sideways)
 
-**Visual:** Loop the over-cap refusal scene from the swap demo + the MCP refusal scene back-to-back.
+Drop Scene 7 (MagicBlock) and Scene 5b (Validations tab). Compress Scene 8 to just the second prompt — "Try to swap 500 USDC" → Claude refuses. Keep everything else. Order:
 
-**Voiceover:**
-> Every AI agent on Solana today is a raw keypair. No name. No audit trail. No way to revoke. SNSIP-Agent fixes that — a `.sol` is the verifiable, revocable identity for any agent. Watch — `swap-bot.sol`'s permission caps spending at 100 USDC per day. Try 500. *[click execute]* Gate refuses on-chain, before the action lands. And Claude Desktop reads the same permission natively via MCP. Five agents live on devnet. snsip dot pages dot dev.
+```
+0:00  Hook                10s
+0:10  Sign-in             18s
+0:28  Airdrop             18s
+0:46  Swap refusal        22s   ← strongest moment
+1:08  Reputation          15s
+1:23  Handshake           15s
+1:38  Claude refuses 500  20s   ← second-strongest moment
+1:58  Close               2s
+```
 
-**Caption to post with the clip:**
-> Every AI agent on Solana is a raw keypair. No name. No scope. No way for a dApp to know what it's allowed to do — or for an owner to revoke it.
+---
+
+## 30-SECOND X CLIP
+
+**Visual:** Just the two refusals back to back — swap demo's over-cap rejection + Claude Desktop's refusal.
+
+**Say:**
+> Every AI agent on Solana today is a private key. No rules. If it gets hacked, nobody can stop it. I made it so each agent has a `.sol` name with rules attached — like a driver's license. `swap-bot` is capped at one hundred USDC a day. Try five hundred — refused, on Solana, before money moves. And Claude Desktop reads the same rule directly. Five agents live on devnet. snsip-cc5.pages.dev.
+
+**X caption to post with the clip:**
+> Every AI agent on Solana is a private key with no rules.
 >
-> SNSIP-Agent makes a `.sol` the verifiable, revocable identity for any agent on Solana. On-chain permissions. Live MCP integration. Open standard.
+> I built SNSIP-Agent — a `.sol` name + on-chain rules for each agent. Try to break a rule, system refuses before money moves. And Claude Desktop reads the same rule directly.
 >
 > 5 agents live on devnet → snsip-cc5.pages.dev
 > https://github.com/hien-p/snsip-agent
 
 ---
 
-## D. RECORDER NOTES
+## SOUNDBITES WORTH KEEPING
 
-**Words to absolutely keep in the cut (the soundbite):**
-- *"Identity is the missing primitive on Solana."*
-- *"Claude refuses, as Claude, because the on-chain gate said no."*
-- *"Open standard. MIT-licensed. Live on devnet today."*
+If you only remember three sentences from this script, these are the ones:
 
-**Words you can cut if running long:**
-- The bracketed technical callouts (those are for caption overlays, not narration)
-- The MagicBlock latency narration (drop the whole scene first if needed)
+1. *"Every AI agent on Solana today is just a private key. No name. No history. No rules."*
+2. *"The owner sets the rules. The agent can't break them."*
+3. *"That's the difference — the agent's rules aren't a doc you read, they're something every AI assistant can see and respect."*
 
-**Stumble recovery:**
-- Don't restart from 0:00. Pause 2 seconds. Repeat the sentence cleanly. Edit the bad take out in post.
-
-**Honest framing (don't oversell):**
-- If a judge asks *"but what stops the agent from acting outside its permission?"* — answer: *"Today, the gate runs in the dApp / MCP / SDK. Full on-chain enforcement via the Anchor verifier program is the Q3 roadmap. The byte formats today are forward-compatible with it."*
-- Don't claim the Anchor programs are deployed. They're sketched, not deployed.
+Those three lines carry the pitch. Everything else is support.
 
 ---
 
-## E. POST-RECORD CHECKLIST
+## IF SOMETHING BREAKS WHILE RECORDING
+
+| Failure | What to do |
+|---|---|
+| Stumble on a word | Pause 2 seconds. Repeat that sentence cleanly. Edit out the bad take. Don't restart from 0:00. |
+| Phantom popup hangs | Wait silently. Don't comment on the loading. Edit dead air out. |
+| Devnet RPC slow | Skip Scene 7 (latency) entirely. Or skip the Live activity panel in Scene 5. |
+| Claude Desktop doesn't show 🔌 | Restart Claude Desktop. If still missing → use the Safe 2:00 cut and stitch the MCP scene later (or skip it). |
+| Going over time | Cut Scene 7 (MagicBlock) first. Then trim Scene 5 (drop Validations). |
+
+---
+
+## JUDGE Q&A — IF SOMEONE ASKS
+
+**Q: But what stops the agent from breaking the rules if it just signs the transaction itself?**
+
+> Honest answer: today the rules are enforced in the app, the MCP server, and the SDK. Direct on-chain enforcement is the next milestone — I sketched the Anchor program for it, and the byte format I'm using today already matches what that program will read. So today is the spec, the toolchain, and the AI integration. Adoption is what makes it complete.
+
+**Q: Why is this better than just using a wallet address?**
+
+> Wallet addresses can't carry rules. A `.sol` name can — signing key, endpoint, what programs it's allowed to call, how much it can spend, when the permission expires, who validated it. Plus the owner can revoke or update by rewriting the on-chain record.
+
+**Q: How is this different from existing Solana identity projects?**
+
+> Two things: structured permissions with expiry built in, and the MCP integration. Any AI assistant can read this today. No existing Solana identity project ships an MCP server.
+
+---
+
+## POST-RECORD CHECKLIST
 
 ```
-[ ] Trim to 3:00 ruthlessly. Cut "uh"s, repeated phrases.
-[ ] (Main cut) Stitch the pre-recorded MCP scene at 2:15.
-[ ] Add 2-sec fade-in at start, fade-out at end.
-[ ] Add a single-line caption overlay during Scene 4 (the refusal):
-    "swap-bot.sol cap: 100 USDC/day · requested: 500 USDC · denied on-chain"
-[ ] Add a single-line caption during Scene 8 (MCP):
+[ ] Trim ruthlessly. Cut "uh"s and repeated phrases.
+[ ] Stitch the pre-recorded MCP scene at 2:15 (main cut only).
+[ ] 2-sec fade in at start, 2-sec fade out at end.
+[ ] Add one caption overlay during Scene 4 (the refusal):
+    "swap-bot.sol cap: 100 USDC/day · requested: 500 USDC · denied"
+[ ] One caption during Scene 8 (Claude):
     "Claude Desktop → SNSIP-Agent MCP → Solana devnet"
 [ ] Export 1080p MP4, ≤ 200 MB.
-[ ] Upload to YouTube — title/description/tags from pitch/youtube-meta.md.
-[ ] Visibility: UNLISTED. NOT private.
-[ ] Verify link works in Incognito (no sign-in prompt).
-[ ] Paste YouTube URL into pitch/submission-text.md line 100.
+[ ] Upload to YouTube — title/description from pitch/youtube-meta.md.
+[ ] Visibility: UNLISTED. Not private.
+[ ] Verify link opens in Incognito (no Google sign-in).
+[ ] Paste YouTube URL into pitch/submission-text.md L100.
 [ ] git add pitch/submission-text.md && git commit -m "Wire video URL" && git push.
 ```
 
-Then follow `pitch/portal-walkthrough.md` for the 3-portal submission.
+Then follow `pitch/portal-walkthrough.md` for the 3-portal submissions.
 
-Go ship.
+Done.
