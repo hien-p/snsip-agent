@@ -75,7 +75,7 @@ Real Ed25519 cryptography end-to-end. Real on-chain Solana state. Open standard,
 ```
 Email:   [your email]
 Twitter: [@your-handle]
-GitHub:  [https://github.com/your-handle/sns_prj]
+GitHub:  https://github.com/hien-p/snsip-agent
 ```
 
 ---
@@ -83,7 +83,7 @@ GitHub:  [https://github.com/your-handle/sns_prj]
 ## Repo URL (Colosseum + Frontier + Superteam Earn)
 
 ```
-[https://github.com/<your-handle>/sns_prj]
+https://github.com/hien-p/snsip-agent
 ```
 
 If the repo is still private at submission time, grant read access to **contact@sns.id** (the SNS team email — required by the listing).

@@ -7,6 +7,7 @@
 > Dual-submitted to: Dune Frontier Data Sidetrack (Dune SIM integration)
 
 **🌐 Live demo:** https://snsip-cc5.pages.dev
+**📦 Repo:** https://github.com/hien-p/snsip-agent
 **📺 Demo video:** _record per `pitch/demo-script.md`_
 **📜 Spec:** [`SNSIP-AGENT.md`](./SNSIP-AGENT.md)
 **🔌 MCP install:** https://snsip-cc5.pages.dev/mcp
