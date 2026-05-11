@@ -360,7 +360,7 @@ function StatusBanner({
     }
   })();
   return (
-    <div className="panel" style={{ background: bg, borderColor: border, padding: "0.875rem 1.25rem", textAlign: "center" }}>
+    <div className="panel" style={{ background: bg, padding: "0.875rem 1.25rem", textAlign: "center" }}>
       <div style={{ color, fontSize: "1rem", fontWeight: 600 }}>{msg}</div>
       {sublabel && (
         <div style={{ color: "var(--muted)", fontSize: "0.8125rem", marginTop: "0.25rem", fontFamily: "monospace" }}>
@@ -453,9 +453,8 @@ function AgentCard({
       style={{
         display: "grid",
         gap: "0.625rem",
-        borderLeft: `3px solid ${accent}`,
-        boxShadow: isActive ? `0 0 0 2px ${accent}, 0 0 24px ${accent}88` : "none",
-        transition: "box-shadow 0.4s ease",
+        opacity: isActive ? 1 : 0.85,
+        transition: "opacity 0.4s ease",
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
@@ -572,12 +571,11 @@ function SceneStage({ scene }: { scene: Scene }) {
       style={{
         minHeight: "5.5rem",
         background: visible ? "var(--panel-2)" : "transparent",
-        borderColor: visible ? color : "transparent",
         padding: "1rem 1.5rem",
         textAlign: "center",
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(-6px)",
-        transition: "opacity 0.4s ease, transform 0.4s ease, border-color 0.4s ease, background 0.4s ease",
+        transition: "opacity 0.4s ease, transform 0.4s ease, background 0.4s ease",
       }}
     >
       <div style={{ fontSize: "1.0625rem", fontWeight: 600, color, display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
