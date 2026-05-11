@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>SNSIP-Agent · pitch deck</title>
+  <style>
+    @page { size: 1920px 1080px; margin: 0; }
+    @media print {
+      body { margin: 0; }
+      .slide { page-break-after: always; break-after: page; }
+      .slide:last-child { page-break-after: auto; }
+      .no-print { display: none; }
+    }
+    :root {
+      --bg: #0a0a0a;
+      --bg-2: #141414;
+      --fg: #fafafa;
+      --muted: #a3a3a3;
+      --accent: #a8d946;
+      --accent-2: #94c635;
+      --border: #262626;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #050505;
+      color: var(--fg);
+      font-family: ui-sans-serif, system-ui, "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      letter-spacing: -0.005em;
+    }
+    code, pre, .mono {
+      font-family: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, monospace;
+    }
+    .italic-accent {
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      font-weight: 500;
+      color: var(--accent);
+    }
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      padding: 110px 140px;
+      background: var(--bg);
+      border-bottom: 1px solid #1a1a1a;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      overflow: hidden;
+    }
+    .slide-num {
+      position: absolute;
+      top: 60px;
+      right: 80px;
+      font-size: 18px;
+      color: var(--muted);
+      font-family: ui-monospace, monospace;
+    }
+    .slide-footer {
+      position: absolute;
+      bottom: 60px;
+      left: 140px;
+      right: 140px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 18px;
+      color: var(--muted);
+      font-family: ui-monospace, monospace;
+    }
+    .slide-footer .lime-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      margin-right: 12px;
+      vertical-align: middle;
+    }
+    h1 {
+      font-size: 96px;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+    h2 {
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin: 0;
+    }
+    h3 { font-size: 38px; font-weight: 700; margin: 0; }
+    p { font-size: 28px; line-height: 1.5; color: var(--muted); margin: 0; max-width: 1300px; }
+    p.lead { font-size: 36px; color: var(--fg); line-height: 1.45; max-width: 1400px; }
+
+    .accent-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 22px;
+      background: rgba(168,217,70,.12);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      border-radius: 999px;
+      font-size: 18px;
+      font-family: ui-monospace, monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      width: fit-content;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 24px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      margin-top: 24px;
+    }
+    .card {
+      padding: 36px 40px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .card .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--accent);
+      color: #0a0a0a;
+      font-weight: 800;
+      font-size: 24px;
+    }
+    .card h3 { font-size: 26px; }
+    .card p { font-size: 19px; color: var(--muted); margin: 0; }
+    .bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .bullets li {
+      font-size: 30px;
+      line-height: 1.45;
+      padding-left: 36px;
+      position: relative;
+      color: var(--fg);
+    }
+    .bullets li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .bullets li b { font-weight: 700; }
+    .bullets li span { color: var(--muted); }
+
+    pre.code-block {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 40px;
+      font-size: 22px;
+      line-height: 1.6;
+      overflow: hidden;
+      color: var(--fg);
+    }
+    .lime { color: var(--accent); }
+    .red { color: #ef4444; }
+    .muted { color: var(--muted); }
+
+    .footnote { font-size: 18px; color: var(--muted); font-family: ui-monospace, monospace; }
+    .big-stat { font-size: 56px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; }
+    .stats { display: flex; gap: 96px; margin-top: 16px; }
+    .stats .stat { display: grid; gap: 4px; }
+    .stats .stat-label { font-size: 18px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; }
+
+    .ascii-arch {
+      font-family: ui-monospace, monospace;
+      font-size: 18px;
+      line-height: 1.4;
+      color: var(--fg);
+      white-space: pre;
+      background: var(--bg-2);
+      padding: 36px 44px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+    .closing {
+      font-size: 80px;
+      line-height: 1.1;
+      max-width: 1500px;
+    }
+    .no-print-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #050505;
+      color: var(--muted);
+      padding: 14px 24px;
+      font-size: 14px;
+      font-family: ui-monospace, monospace;
+      border-bottom: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<div class="no-print no-print-bar">
+  Press <b>Cmd+P</b> → <b>Save as PDF</b> → set paper size to <b>Custom 1920×1080px</b> · margins <b>None</b> · background graphics <b>On</b>. Output: pitch/deck.pdf.
+</div>
+
+<!-- Slide 1 — Hook -->
+<section class="slide">
+  <div class="slide-num">01 / 10</div>
+  <span class="accent-tag">SNSIP-Agent</span>
+  <h1>Verifiable, revocable identity<br/>for every AI agent on <span class="italic-accent">Solana.</span></h1>
+  <p class="lead">Readable natively by Claude Desktop, Cursor, and any MCP-aware AI assistant.</p>
+  <div style="margin-top: auto;">
+    <code style="font-size: 24px; color: var(--accent);">agent-registration[&lt;registry&gt;][&lt;agentId&gt;]</code>
+  </div>
+  <div class="slide-footer">
+    <span><span class="lime-dot"></span>snsip-cc5.pages.dev</span>
+    <span>SNS Identity Track · Frontier 2026</span>
+  </div>
+</section>
+
+<!-- Slide 2 — Problem -->
+<section class="slide">
+  <div class="slide-num">02 / 10</div>
+  <span class="accent-tag">THE PROBLEM</span>
+  <h2>AI agents move millions on Solana every day.<br/>None of them have a verifiable identity.</h2>
+  <ul class="bullets" style="margin-top: 32px;">
+    <li>Today every Solana agent is a <b>raw keypair</b>. No name. No scope. No audit trail.</li>
+    <li>Anyone can spawn one. <b>No one can stop one</b>. Owners can't revoke without rotating keys.</li>
+    <li>A counterparty dApp has no on-chain way to ask: <b>what is this agent allowed to do?</b></li>
+  </ul>
+  <div style="margin-top: auto;" class="italic-accent" >Identity is the missing primitive on Solana.</div>
+  <div class="slide-footer">
+    <span><span class="lime-dot"></span>SNSIP-Agent</span>
+    <span>02 — The problem</span>
+  </div>
+</section>
+
+<!-- Slide 3 — Solution -->
+<section class="slide">
+  <div class="slide-num">03 / 10</div>
+  <span class="accent-tag">SOLUTION</span>
+  <h2>Six things, shipped in eight days.</h2>
+  <div class="grid-3">
+    <div class="card"><span class="num">1</span><h3>SNSIP-Agent spec</h3><p>EIP-shaped draft. Records v2 keys + permission grant schema + six canonical memo schemas.</p></div>
+    <div class="card"><span class="num">2</span><h3>@snsip/agent-sdk</h3><p>Cluster-aware records v2, Ed25519 sign/verify, permission gate, Dune SIM helpers. 38 unit tests.</p></div>
+    <div class="card"><span class="num">3</span><h3>@snsip/mcp</h3><p>Model Context Protocol server. 5 tools any AI assistant can call. The killer integration.</p></div>
+    <div class="card"><span class="num">4</span><h3>Guided 4-stop dApp</h3><p>Sign-in → Sybil-resistant airdrop → Permission-gated swap → MCP install. Cloudflare Pages.</p></div>
+    <div class="card"><span class="num">5</span><h3>5 live agents on devnet</h3><p>25 records v2 written. 9 sample interaction transactions, every byte verifiable on Explorer.</p></div>
+    <div class="card"><span class="num">6</span><h3>MagicBlock ER</h3><p>Sub-50ms agent-to-agent settlement. Critical for high-frequency agent ops.</p></div>
+  </div>
+  <div class="slide-footer">
+    <span><span class="lime-dot"></span>One repo · open standard · MIT</span>
+    <span>03 — What we built</span>
+  </div>
+</section>
+
+<!-- Slide 4 — Killer MCP demo -->
+<section class="slide">
+  <div class="slide-num">04 / 10</div>
+  <span class="accent-tag">THE KILLER DEMO</span>
+  <h2>First identity protocol on Solana<br/>that speaks <span class="italic-accent">MCP</span> natively.</h2>
+  <pre class="code-block" style="font-size: 26px; line-height: 1.7; margin-top: 16px;">
+<span class="muted">You: </span>   What is swap-bot.sol allowed to do?
+<span class="lime">Claude:</span> swap-bot.sol can call Jupiter Aggregator,
+        spend up to 100 USDC per day, expires in 28 days.
+
+<span class="muted">You: </span>   Try to swap 500 USDC.
+<span class="red">Claude:</span> I can't — its on-chain permission caps
+        spending at <b>100 USDC per day</b>.</pre>
+  <p style="font-size: 28px; color: var(--fg); margin-top: 24px;">
+    Claude refuses an over-cap swap <b>as Claude</b>, not as a form. No custom integration.
+  </p>
+  <div class="slide-footer">
+    <span><span class="lime-dot"></span>tx 5xptGmV3… · slot 461089229 · verified on Solana Explorer</span>
+    <span>04 — MCP</span>
+  </div>
+</section>
+
+<!-- Slide 5 — Architecture -->
+<section class="slide">
+  <div class="slide-num">05 / 10</div>
+  <span class="accent-tag">ARCHITECTURE</span>
+  <h2>One repo. Three consumption surfaces.</h2>
+  <pre class="ascii-arch">
+   AI assistants (Claude Desktop · Cursor · Continue · ChatGPT MCP)
+                        │  stdio · MCP
+   ┌────────────────────▼───────────────────────────┐
+   │   @snsip/mcp — 5 tools wrapping the SDK         │
+   └────────────────────┬───────────────────────────┘
+                        │
+        ┌───────────────┼─────────────────┐
+        ▼               ▼                 ▼
+    Solana SDK       Solana RPC       Dune SIM
+    (typed)          (records v2)     (live mainnet)
+        │
+        ▼
+    apps/web (Next.js · static · Cloudflare Pages)
+        └─ 4-stop tour: Login → Airdrop → Swap → MCP</pre>
+  <div class="slide-footer">
+    <span><span class="lime-dot"></span>github.com/hien-p/snsip-agent</span>
+    <span>05 — Stack</span>
+  </div>
+</section>
+
+<!-- Slide 6 — Bounty themes -->
+<section class="slide">
+  <div class="slide-num">06 / 10</div>
+  <span class="accent-tag">BOUNTY COVERAGE</span>
+  <h2>Both SNS themes covered.<br/>Plus the listed sybil-resistance use case.</h2>
+  <ul class="bullets" style="margin-top: 32px;">
+    <li><b>Social Identity</b> → <code class="lime">/login-demo</code>. Your .sol is your login. No password, no email, no OAuth.</li>
+    <li><b>Agent Identity</b> → <code class="lime">/swap-demo</code> + MCP. Permission-gated actions enforced by AI assistants.</li>
+    <li><b>Sybil resistance</b> → <code class="lime">/airdrop-demo</code>. Four-check identity gate before claim.</li>
+    <li><b>Reputation + Validations</b> → per-agent profile tabs. Weighted timeline, typed claims, forward-compatible memo schemas.</li>
+  </ul>
+  <div class="slide-footer">
+    <span><span class="lime-dot"></span>bounty-aligned</span>
+    <span>06 — Coverage</span>
+  </div>
+</section>
+
+<!-- Slide 7 — On-chain proof -->
+<section class="slide">
+  <div class="slide-num">07 / 10</div>
+  <span class="accent-tag">ON-CHAIN PROOF</span>
+  <h2>Every claim verifiable on Solana Explorer.</h2>
+  <div class="stats">
+    <div class="stat"><span class="big-stat">5</span><span class="stat-label">live .sol agents</span></div>
+    <div class="stat"><span class="big-stat">25</span><span class="stat-label">records v2 written</span></div>
+    <div class="stat"><span class="big-stat">9</span><span class="stat-label">sample tx signatures</span></div>
+    <div class="stat"><span class="big-stat">38</span><span class="stat-label">unit tests passing</span></div>
+  </div>
+  <ul class="bullets" style="margin-top: 40px;">
+    <li>Sign-in challenge · airdrop claim · swap allowed · <b class="lime">swap rejected (the killer)</b></li>
+    <li>Reputation positive · reputation neutral · validation audit · validation capability · handshake</li>
+    <li>Every byte byte-verified via public devnet RPC. No trust-us-bro.</li>
+  </ul>
+  <div class="slide-footer">
+    <span><span class="lime-dot"></span>pitch/onchain-proof.md</span>
+    <span>07 — Proof</span>
+  </div>
+</section>
+
+<!-- Slide 8 — Why this wins -->
+<section class="slide">
+  <div class="slide-num">08 / 10</div>
+  <span class="accent-tag">WHY THIS WINS</span>
+  <h2>Five reasons.</h2>
+  <ul class="bullets" style="margin-top: 28px;">
+    <li><b>Standard, not an app.</b> <span>Spec + SDK + reference impl = ecosystem leverage.</span></li>
+    <li><b>AI-assistant-native from day one.</b> <span>Claude Desktop reads .sol identity today via MCP.</span></li>
+    <li><b>Real cryptography end-to-end.</b> <span>Ed25519 sign/verify, 32-byte pubkey validation, on-chain ownership check.</span></li>
+    <li><b>Bounty-aligned.</b> <span>Both SNS themes + sybil-resistance + Dune sidetrack covered.</span></li>
+    <li><b>Verifiable founder progress.</b> <span>38 tests · 9 on-chain txs · 5 agents · 9 routes · 8 days.</span></li>
+  </ul>
+  <div class="slide-footer">
+    <span><span class="lime-dot"></span>Innovation · technical merit · practicality · UX</span>
+    <span>08 — Win conditions</span>
+  </div>
+</section>
+
+<!-- Slide 9 — Roadmap -->
+<section class="slide">
+  <div class="slide-num">09 / 10</div>
+  <span class="accent-tag">ROADMAP</span>
+  <h2>From spec to ecosystem.</h2>
+  <div class="grid-3">
+    <div class="card">
+      <h3 style="color: var(--accent);">Q3 2026</h3>
+      <p>Formalize as official SNSIP via SNS review. Deploy Anchor reputation + validation registries (memo schemas already in production). Phantom + Backpack adapter SDK.</p>
+    </div>
+    <div class="card">
+      <h3 style="color: var(--accent);">Q4 2026</h3>
+      <p>First 3 production agent operators on .sol. Reputation indexer + public API. Cursor + Continue first-class MCP integrations.</p>
+    </div>
+    <div class="card">
+      <h3 style="color: var(--accent);">2027</h3>
+      <p>Agent monetization rails via x402. Cross-chain agent identity bridge. SNS as the default identity layer for AI agents on Solana.</p>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span><span class="lime-dot"></span>open standard · MIT · MIT</span>
+    <span>09 — Roadmap</span>
+  </div>
+</section>
+
+<!-- Slide 10 — Team + Ask + Close -->
+<section class="slide">
+  <div class="slide-num">10 / 10</div>
+  <span class="accent-tag">TEAM + ASK</span>
+  <div class="grid-2" style="margin-top: 16px;">
+    <div>
+      <h3 style="font-size: 30px; color: var(--accent);">Team</h3>
+      <p style="font-size: 26px; color: var(--fg); margin-top: 16px;">
+        <!-- TODO: replace with your name(s) + one-line credibility -->
+        [Your name] · [one-line credibility]
+      </p>
+      <h3 style="font-size: 30px; color: var(--accent); margin-top: 36px;">Contact</h3>
+      <p style="font-size: 22px; color: var(--muted); margin-top: 12px;" class="mono">
+        github.com/hien-p/snsip-agent<br/>
+        snsip-cc5.pages.dev<br/>
+        [your email] · [@your-twitter]
+      </p>
+    </div>
+    <div>
+      <h3 style="font-size: 30px; color: var(--accent);">Ask of SNS</h3>
+      <ul class="bullets" style="margin-top: 12px;">
+        <li style="font-size: 22px;"><b>Adoption signal.</b> Review the draft SNSIP, surface for community feedback.</li>
+        <li style="font-size: 22px;"><b>Two intros.</b> Agent operators who'd pilot the standard.</li>
+        <li style="font-size: 22px;"><b>Listing.</b> SNS partner directory once mainnet-ready.</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top: auto;" class="closing italic-accent">
+    Identity is the missing primitive on Solana.<br/>We built it.
+  </div>
+  <div class="slide-footer">
+    <span><span class="lime-dot"></span>thanks</span>
+    <span>10 — End</span>
+  </div>
+</section>
+
+</body>
+</html>
