@@ -66,15 +66,15 @@ Real Ed25519 cryptography end-to-end. Real on-chain Solana state. Open standard,
 ## Team
 
 ```
-[Your name(s) — fill in]
-[One-line credibility per person]
+Team SNSIP-Agent
+Harry Phan — solo builder · ships in Solana, TypeScript, MCP
 ```
 
 ## Contact
 
 ```
-Email:   [your email]
-Twitter: [@your-handle]
+Email:   phanhoangvinhhien@gmail.com
+Twitter: https://x.com/harry_phan06
 GitHub:  https://github.com/hien-p/snsip-agent
 ```
 
@@ -235,5 +235,5 @@ AI agents already move real money on Solana every block. None of them have a ver
 
 5 agents live on devnet right now: snsip-cc5.pages.dev
 
-GitHub: [link]
+GitHub: https://github.com/hien-p/snsip-agent
 ```
