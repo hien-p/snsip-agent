@@ -9,15 +9,16 @@ type Tab =
   | "login"
   | "airdrop"
   | "swap"
-  | "mcp";
+  | "mcp"
+  | "graph";
 
 const LINKS: Array<{ tab: Exclude<Tab, "home">; href: string; label: string }> = [
   { tab: "mcp", href: "/mcp", label: "MCP" },
+  { tab: "graph", href: "/graph", label: "Graph" },
   { tab: "agents", href: "/agents", label: "Agents" },
   { tab: "login", href: "/login-demo", label: "Sign-in" },
   { tab: "airdrop", href: "/airdrop-demo", label: "Airdrop" },
   { tab: "swap", href: "/swap-demo", label: "Swap" },
-  { tab: "handshake", href: "/playground/handshake", label: "Handshake" },
 ];
 
 export function SiteNav({ active }: { active: Tab }) {
