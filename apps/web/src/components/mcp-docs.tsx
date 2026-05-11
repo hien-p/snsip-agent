@@ -4,18 +4,13 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { Check, Copy, Plug, Terminal, MessageSquare } from "lucide-react";
 
-const BUILD_CMD = `# One-line install: clone, install, build
-git clone https://github.com/hien-p/snsip-agent.git
-cd snsip-agent && pnpm install && pnpm --filter @snsip/mcp build
-
-# Note the absolute path that gets printed at the end of the build.
-# You'll paste it into the config below.`;
-
+// NPM one-liner config — preferred path. No clone, no build, no
+// absolute paths. Works on macOS, Linux, Windows.
 const CONFIG_JSON = `{
   "mcpServers": {
     "snsip-agent": {
-      "command": "node",
-      "args": ["/ABSOLUTE/PATH/TO/snsip-agent/packages/snsip-mcp/dist/server.js"],
+      "command": "npx",
+      "args": ["-y", "snsip-mcp"],
       "env": {
         "SNSIP_CLUSTER": "devnet",
         "SIM_API_KEY": "optional — get one at sim.dune.com for the activity tool"
@@ -23,6 +18,12 @@ const CONFIG_JSON = `{
     }
   }
 }`;
+
+const FROM_SOURCE_CMD = `# Optional — only if you want to hack on the server locally
+git clone https://github.com/hien-p/snsip-agent.git
+cd snsip-agent && pnpm install && pnpm --filter snsip-mcp build
+# Then change the "command" above to "node" and "args" to the
+# absolute path of packages/snsip-mcp/dist/server.js`;
 
 const REMOTE_SHARE_URL = "https://snsip-cc5.pages.dev/install";
 
@@ -91,19 +92,22 @@ export function McpDocs() {
       <ShareInstallBar />
 
 
-      <Section icon={<Terminal size={16} />} title="1. Build">
-        <CodeBlock label="terminal" code={BUILD_CMD} />
-      </Section>
-
-      <Section icon={<Terminal size={16} />} title="2. Wire it into Claude Desktop">
+      <Section icon={<Terminal size={16} />} title="1. Paste this config into Claude Desktop">
         <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--muted-2)" }}>
-          Open <strong>Claude Desktop → Settings → Developer → Edit Config</strong>, paste this,
-          replace the path with your local checkout, restart.
+          Open <strong>Claude Desktop → Settings → Developer → Edit Config</strong>, paste this, restart Claude Desktop.
+          No clone, no build, no absolute paths — <code>npx</code> downloads <code>snsip-mcp</code> from npm on first run.
         </p>
         <CodeBlock label="claude_desktop_config.json" code={CONFIG_JSON} />
         <p style={{ margin: 0, fontSize: "0.8125rem", color: "var(--muted)" }}>
           Cursor + Continue use the same shape — check their docs for where the file lives.
         </p>
+      </Section>
+
+      <Section icon={<Terminal size={16} />} title="2. (Optional) Build from source">
+        <p style={{ margin: 0, fontSize: "0.8125rem", color: "var(--muted-2)" }}>
+          Skip this section unless you want to hack on the server code. The npm install above is enough for normal use.
+        </p>
+        <CodeBlock label="terminal" code={FROM_SOURCE_CMD} />
       </Section>
 
       <Section icon={<MessageSquare size={16} />} title="3. Talk to it">

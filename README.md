@@ -10,7 +10,7 @@
 **📦 Repo:** https://github.com/hien-p/snsip-agent
 **📺 Demo video:** _record per `pitch/demo-script.md`_
 **📜 Spec:** [`SNSIP-AGENT.md`](./SNSIP-AGENT.md)
-**🔌 MCP install:** https://snsip-cc5.pages.dev/mcp
+**🔌 MCP install:** [npmjs.com/package/snsip-mcp](https://www.npmjs.com/package/snsip-mcp) · install with `npx -y snsip-mcp` in Claude Desktop config · see [`/install`](https://snsip-cc5.pages.dev/install)
 
 ---
 

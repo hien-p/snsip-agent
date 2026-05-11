@@ -1,7 +1,7 @@
 {
-  "name": "@snsip/mcp",
+  "name": "snsip-mcp",
   "version": "0.1.0",
-  "description": "Model Context Protocol server for SNSIP-Agent — read .sol agent identities and permissions from any MCP client (Claude Desktop, Cursor, etc.)",
+  "description": "Model Context Protocol server for SNSIP-Agent — read .sol agent identities and permissions from Claude Desktop, Cursor, and any MCP-aware AI assistant.",
   "license": "MIT",
   "type": "module",
   "bin": {
@@ -12,22 +12,50 @@
     "dist",
     "README.md"
   ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "solana",
+    "sns",
+    "snsip-agent",
+    "ai-agents",
+    "identity",
+    "claude-desktop",
+    "cursor"
+  ],
+  "homepage": "https://snsip-cc5.pages.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hien-p/snsip-agent.git",
+    "directory": "packages/snsip-mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/hien-p/snsip-agent/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "dev": "tsc -p tsconfig.json --watch",
+    "build": "tsup",
+    "build:tsc": "tsc -p tsconfig.json",
+    "dev": "tsup --watch",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "prepublishOnly": "pnpm build && chmod +x dist/server.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.20.0",
-    "@snsip/agent-sdk": "workspace:*",
     "@solana/web3.js": "^1.98.0",
-    "tweetnacl": "^1.0.3",
+    "@bonfida/spl-name-service": "^3.0.21",
+    "@bonfida/sns-records": "^0.1.0",
     "bs58": "^6.0.0",
+    "tweetnacl": "^1.0.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "typescript": "^5.7.0",
-    "@types/node": "^20.0.0"
+    "@snsip/agent-sdk": "workspace:*",
+    "@types/node": "^20.0.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.7.0"
   }
 }
