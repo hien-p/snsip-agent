@@ -1,0 +1,130 @@
+# Anchor build + test pipeline for the four SNSIP-Agent programs.
+#
+# Triggers on push/PR that touches programs/ or Anchor.toml. Runs anchor
+# build to confirm the source compiles cleanly, then anchor test against
+# a local solana-test-validator (no devnet RPC dependency, no SOL spend).
+#
+# Devnet deploy is a manual step gated on a workflow_dispatch event so
+# we don't accidentally re-deploy on every push — see the deploy job
+# below. Requires repo secrets DEVNET_DEPLOYER_KEYPAIR_JSON (a funded
+# devnet keypair, base58-encoded JSON array).
+
+name: anchor
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'programs/**'
+      - 'tests/anchor/**'
+      - 'Anchor.toml'
+      - 'Cargo.toml'
+      - '.github/workflows/anchor.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'programs/**'
+      - 'tests/anchor/**'
+      - 'Anchor.toml'
+  workflow_dispatch:
+    inputs:
+      deploy_to_devnet:
+        description: 'Deploy to Solana devnet after build'
+        required: false
+        default: 'false'
+
+env:
+  SOLANA_VERSION: 1.18.20
+  ANCHOR_VERSION: 0.30.1
+  RUST_BACKTRACE: 1
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.80.0
+          components: rustfmt, clippy
+
+      - name: Cache Cargo registry + target
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install Solana CLI
+        run: |
+          sh -c "$(curl -sSfL https://release.anza.xyz/v${{ env.SOLANA_VERSION }}/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+
+      - name: Install Anchor
+        run: |
+          cargo install --git https://github.com/coral-xyz/anchor avm --locked --force
+          avm install ${{ env.ANCHOR_VERSION }}
+          avm use ${{ env.ANCHOR_VERSION }}
+          anchor --version
+
+      - name: Anchor build
+        run: anchor build
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+
+      - name: pnpm install
+        run: pnpm install --frozen-lockfile
+
+      - name: Anchor test (local validator)
+        run: anchor test --skip-build
+
+  deploy-devnet:
+    needs: build-test
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_to_devnet == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Solana + Anchor (cached path)
+        run: |
+          sh -c "$(curl -sSfL https://release.anza.xyz/v${{ env.SOLANA_VERSION }}/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+          cargo install --git https://github.com/coral-xyz/anchor avm --locked --force
+          avm install ${{ env.ANCHOR_VERSION }} && avm use ${{ env.ANCHOR_VERSION }}
+
+      - name: Restore deployer keypair from secret
+        run: |
+          mkdir -p ~/.config/solana
+          echo "$DEVNET_DEPLOYER_KEYPAIR_JSON" > ~/.config/solana/id.json
+          solana config set --url https://api.devnet.solana.com
+          solana address
+          solana balance
+        env:
+          DEVNET_DEPLOYER_KEYPAIR_JSON: ${{ secrets.DEVNET_DEPLOYER_KEYPAIR_JSON }}
+
+      - name: anchor keys sync + build
+        run: |
+          anchor keys sync
+          anchor build
+
+      - name: anchor deploy --provider.cluster devnet
+        run: anchor deploy --provider.cluster devnet
+
+      - name: Print deployed program IDs
+        run: |
+          echo "## Deployed program IDs" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          grep -A2 '\[programs.devnet\]' Anchor.toml >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY

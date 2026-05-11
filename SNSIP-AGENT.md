@@ -268,6 +268,75 @@ See `README.md` for build/run instructions and `plans/sns-identity-hackathon/PLA
 - [Solana Attestation Service writeup (Range)](https://www.range.org/blog/introducing-solana-attestation-service)
 - [ENSign source — `ENSignAgentRegistry` Permission struct](https://github.com/LeoFranklin015/ENSign/blob/main/contracts/src/ENSignAgentRegistry.sol)
 
+## Architecture
+
+The four Anchor programs in `programs/` form the on-chain enforcement layer. The TypeScript SDK + MCP server expose them to web apps and AI assistants:
+
+```
+                          ┌────────────────────────────────────┐
+                          │   MCP-aware AI assistants          │
+                          │   Claude Desktop · Cursor · etc.   │
+                          └─────────────────┬──────────────────┘
+                                            │ stdio
+                          ┌─────────────────▼──────────────────┐
+                          │   @snsip/mcp — 5 tools             │
+                          └─────────────────┬──────────────────┘
+                                            │
+   ┌──────── Web dApp (Next.js · Cloudflare Pages) ────────┐  │
+   │  /login-demo · /airdrop-demo · /swap-demo · /graph    │  │
+   │  /mcp · /agents · /playground/handshake · /latency    │  │
+   └────────────────────┬─────────────────────────────────-┘  │
+                        │                                     │
+                        ▼                                     ▼
+                  ┌─────────────────────────────────────────────────────────┐
+                  │            @snsip/agent-sdk (TypeScript)                │
+                  │  cluster-aware records v2 · Ed25519 sign/verify ·       │
+                  │  permission gate · Dune SIM helpers                     │
+                  └────────────────────────┬────────────────────────────────┘
+                                           │
+            ┌──────────────────────────────┼──────────────────────────────┐
+            ▼                              ▼                              ▼
+  ┌──────────────────┐         ┌─────────────────────┐        ┌────────────────────┐
+  │   SNS records    │         │  Anchor programs    │        │   Dune SIM API     │
+  │       v2         │         │   (post-deploy)     │        │  (live mainnet)    │
+  │                  │         │                     │        │                    │
+  │ agent-           │         │ identity-registry   │        │ /beta/svm/         │
+  │ registration[…]  │         │ agent-verifier      │        │   balances         │
+  │ agent.signing-   │         │ reputation-registry │        │   transactions     │
+  │   pubkey         │         │ validation-registry │        │                    │
+  │ agent.endpoint   │         │                     │        │                    │
+  │ agent.controller │         │ CPI graph:          │        │                    │
+  │ agent.           │         │  router →           │        │                    │
+  │   capabilities   │         │  agent-verifier →   │        │                    │
+  │ agent.           │         │  identity-registry  │        │                    │
+  │   attestations   │         │                     │        │                    │
+  │ avatar           │         │ ER-delegated:       │        │                    │
+  │                  │         │  reputation         │        │                    │
+  └──────────────────┘         └─────────────────────┘        └────────────────────┘
+            │                              │
+            └──────────────┬───────────────┘
+                           ▼
+            ┌─────────────────────────────────┐
+            │   Solana mainnet / devnet RPC   │
+            └─────────────────────────────────┘
+```
+
+CPI flow for an agent-authorized action (post-deploy):
+
+```
+client tx [0] Ed25519Program.verify(pubkey, message, signature)
+         [1] agent-verifier.verify_agent_signature(message)
+                  │
+                  ├──► reads Agent PDA from identity-registry
+                  │    (asserts signing_pubkey matches, !revoked)
+                  │
+                  └──► emits AgentVerified(agent_id, sns_domain_hash)
+
+  Downstream programs require [1] succeeded in the same tx before
+  permitting agent-initiated actions. That is how a .sol becomes
+  an enforced principal, not merely a published one.
+```
+
 ## Appendix A — Memo schemas (registry-prototype)
 
 Until the Anchor `reputation-registry` and `validation-registry` programs ship, every registry-class event in the reference dApp is written as an SPL Memo with a canonical, line-oriented byte format. These shapes are forward-compatible with the future Anchor account layouts: the same fields will be parsed by the indexer when the registry programs land. Public RPC users can verify any event by fetching the tx and reading `meta.logMessages` for the Memo line.

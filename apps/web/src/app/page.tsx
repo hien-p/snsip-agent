@@ -6,7 +6,6 @@ import { useRef } from "react";
 import { ArrowDownRight, ArrowRight, KeyRound, ShieldCheck, Settings2, Sparkles } from "lucide-react";
 import { WalletButton } from "@/components/wallet-button";
 import { SnsExplorer } from "@/components/sns-explorer";
-import { MyDomains } from "@/components/my-domains";
 import { LiveAgentsPreview } from "@/components/live-agents-preview";
 
 const ease = [0.23, 1, 0.32, 1] as const;
@@ -34,7 +33,6 @@ export default function Home() {
       <Section delay={0.2}>
         <div style={{ display: "grid", gap: "1rem" }}>
           <SnsExplorer />
-          <MyDomains />
         </div>
       </Section>
       <Section delay={0.1}>
@@ -537,26 +535,15 @@ function WhyItMatters() {
         Why this <span className="serif-italic">matters</span>
       </h2>
       <p style={{ fontSize: "0.9375rem", color: "var(--muted-2)", lineHeight: 1.65, margin: 0 }}>
-        ENS shipped{" "}
-        <a href="https://ens.domains/blog/post/ensip-25" target="_blank" rel="noreferrer" style={{ color: "var(--text)", fontWeight: 600 }}>
-          ENSIP-25
-        </a>{" "}
-        for verifiable agent identity rooted in <code>.eth</code>, and{" "}
-        <a href="https://github.com/LeoFranklin015/ENSign" target="_blank" rel="noreferrer" style={{ color: "var(--text)", fontWeight: 600 }}>
-          ENSign
-        </a>{" "}
-        just won "Most Creative Use of ENS" at Open Agents — turning subnames into passkey-signed
-        smart-account agents with structured permissions. Solana clears 77% of x402 transaction
-        volume but had no equivalent. SNSIP-Agent is the standard layer that lets <code>.sol</code> match
-        — a faithful Solana port of ENSIP-25 plus an{" "}
-        <a href="https://ens.domains/blog/post/ens-ai-agent-erc8004" target="_blank" rel="noreferrer" style={{ color: "var(--text)", fontWeight: 600 }}>
-          ERC-8004
-        </a>
-        -shaped trust stack (Identity, Reputation, Validation) implemented as Anchor programs, with{" "}
+        Every AI agent on Solana today is just a private key. No name. No rules. No audit trail. If
+        that key gets compromised, there is no on-chain way to stop the agent. SNSIP-Agent is the
+        identity layer that fixes this — a <code>.sol</code> name carries the agent&apos;s signing key,
+        endpoint, structured permissions (target program, spend cap, period, expiry), and reputation
+        events. Anchor programs for Identity / Reputation / Validation are sketched in the repo; the{" "}
         <a href="https://docs.magicblock.gg/" target="_blank" rel="noreferrer" style={{ color: "var(--text)", fontWeight: 600 }}>
           MagicBlock Ephemeral Rollups
         </a>{" "}
-        for sub-50ms agent-to-agent settlement.
+        integration handles sub-50ms agent-to-agent settlement.
       </p>
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
         <span className="tag" style={{ background: "var(--panel)", borderColor: "var(--border)" }}>SNS records v2</span>
